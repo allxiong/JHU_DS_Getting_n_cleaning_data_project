@@ -145,7 +145,7 @@ data.set<-data.set[,feature_mean_std]
 dim(data.set)
 head(data.set,1)
 
-feature_mean_std_names <- features[feature_mean_std]
+feature_mean_std_names <- features[c(feature_mean_std)]
 #feature_mean_std_names = gsub('-mean', 'Mean', feature_mean_std_names)
 #feature_mean_std_names = gsub('-std', 'Std', feature_mean_std_names)
 feature_mean_std_names <- gsub('[-()]', '', feature_mean_std_names)
@@ -168,7 +168,7 @@ head(activity_labels)
 #6  6             LAYING
 
 #Merges the training and the test labels to create one label set.
-subject.set <- rbind(subject_train, subject_test)
+subject.set <- rbind(train_subjects, test_subjects)
 label.set<-rbind(trainy, testy)
 data.set<-cbind(subject.set, label.set, data.set)
 dim(data.set)
@@ -185,16 +185,9 @@ head(data.set)
 
 #step 5, From the data set in step 4, creates a second, independent tidy data set with the average of each 
 #variable for each activity and each subject.
-install.packages(reshape2)
+install.packages("reshape2")
 library(reshape2)
 data.set.melted <- melt(data.set, id = c("Subject", "Activity"))
 data.set2<- dcast(data.set.melted, Subject+Activity ~ variable, mean)
 View(data.set2)
 write.table(data.set2, "tidyData.txt", row.names = FALSE)
-
-#Use dataMaid package to generate codebook. More information about generating code book, refer to 
-#https://www.r-bloggers.com/generating-codebooks-in-r/
-install.packages("dataMaid")
-library(dataMaid)
-makeCodebook(data.set2)
-#file is saved as codebook.pdf

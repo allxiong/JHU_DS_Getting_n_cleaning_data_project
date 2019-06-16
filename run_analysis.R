@@ -67,13 +67,13 @@ data.set<-rbind(trainX, testX)
 feature_mean_std <- grep("mean()|std()", features[,2])
 data.set<-data.set[,feature_mean_std]
 feature_mean_std_names <- features[feature_mean_std]
-feature_mean_std_names <- gsub('[-()]', '', feature_mean_std_names)
+#feature_mean_std_names <- gsub('[-()]', '', feature_mean_std_names)
 
 #Prepare for step 3, Uses descriptive activity names to name the activities in the data set
 activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
 #Merges the training and the test labels to create one label set.
-subject.set <- rbind(subject_train, subject_test)
+subject.set <- rbind(train_subjects, test_subjects)
 label.set<-rbind(trainy, testy)
 data.set<-cbind(subject.set, label.set, data.set)
 
@@ -87,7 +87,7 @@ head(data.set)
 
 #step 5, From the data set in step 4, creates a second, independent tidy data set with the average of each 
 #variable for each activity and each subject.
-install.packages(reshape2)
+install.packages("reshape2")
 library(reshape2)
 data.set.melted <- melt(data.set, id = c("Subject", "Activity"))
 data.set2<- dcast(data.set.melted, Subject+Activity ~ variable, mean)
