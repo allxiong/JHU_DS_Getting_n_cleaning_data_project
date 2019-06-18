@@ -1,8 +1,4 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
+
                           Getting and cleaning data project README
                           
 Contents: 
@@ -28,31 +24,31 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 Download and unzip files into local directory 
 Check if file already exists in local file. If not, download file and unzip the file
 Read the labels and features to have an overview of the data#- 'features_info.txt': Shows information about the variables used on the feature vector.
-   o	'features.txt': List of all features.
-   o	'activity_labels.txt': Links the class labels with their activity name.
-   o	'train/X_train.txt': Training set.
-   o	'train/y_train.txt': Training labels.
+- 'features.txt': List of all features.
+- activity_labels.txt': Links the class labels with their activity name.
+- 'train/X_train.txt': Training set.
+- 'train/y_train.txt': Training labels.
 
 •	Step 1. Merge the training and the test sets to create one data set.
-   o	Use rbind to combine training x and test x data to create one data set
+   - Use rbind to combine training x and test x data to create one data set
 
 •	Step 2: Extracts only the measurements on the mean and standard deviation for each measurement.
-   o	according to features.txt file, The set of variables that were estimated from these signals are: 
-   o	mean(): Mean value
-   o	std(): Standard deviation
-   o	create a subset of the mean and std only features
-   o	feature_mean_std <- grep("mean()|std()", features[,2])
+   - according to features.txt file, The set of variables that were estimated from these signals are: 
+   - mean(): Mean value
+   - std(): Standard deviation
+   - create a subset of the mean and std only features
+   - feature_mean_std <- grep("mean()|std()", features[,2])
 
 •	Step 3: Uses descriptive activity names to name the activities in the data set
-  o	data.set$Activity <- factor(data.set$Activity, levels = activity_labels[,1], labels = activity_labels[,2])
+   - data.set$Activity <- factor(data.set$Activity, levels = activity_labels[,1], labels = activity_labels[,2])
 
 •	Step 4: Appropriately labels the data set with descriptive variable names.
-  o	featureNames <- sapply(features[, 2], function(x) {gsub("[()]", "",x)})
-  o	names(data.set)<-c("Subject", "Activity", featureNames[feature_mean_std])
+   - featureNames <- sapply(features[, 2], function(x) {gsub("[()]", "",x)})
+   - names(data.set)<-c("Subject", "Activity", featureNames[feature_mean_std])
 
 •	Step 5: From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-  o	Use “reshape2” package
-  o	Melt data: data.set.melted <- melt(data.set, id = c("Subject", "Activity"))
-  o	dcast data: data.set2<- dcast(data.set.melted, Subject+Activity ~ variable, mean)
-  o	To view the result dataset, use View(data.set2)
-  o	Write data to file tidyData.txt: write.table(data.set2, "./tidyData.txt", row.names = FALSE)
+   - Use “reshape2” package
+   - Melt data: data.set.melted <- melt(data.set, id = c("Subject", "Activity"))
+   - dcast data: data.set2<- dcast(data.set.melted, Subject+Activity ~ variable, mean)
+   - To view the result dataset, use View(data.set2)
+   - Write data to file tidyData.txt: write.table(data.set2, "./tidyData.txt", row.names = FALSE)
