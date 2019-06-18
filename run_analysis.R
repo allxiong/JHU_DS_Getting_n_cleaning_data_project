@@ -21,8 +21,12 @@
 #5.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity 
 #  and each subject.
 ####################################################################################################################################
-#manually downloaded and unziped files into directory "C:\Users\allie\OneDrive\Documents\data\assignment_Dataset\UCI_HAR_Dataset"
+
+install.packages("reshape2")
+
+#Downloaded and unziped files into directory "C:\Users\allie\OneDrive\Documents\data\assignment_Dataset\UCI_HAR_Dataset"
 #setwd to this directory
+
 setwd("C:/MyDocuments/ProfessionalDevelopment/TechnicalSkillDevelopment/DataScience/JohndHopkinsUniversity_DS_program/C3_Getting_n_cleaning_data/Lab_assignment")
 getwd()
 list.files("./")
@@ -87,12 +91,12 @@ head(data.set)
 
 #step 5, From the data set in step 4, creates a second, independent tidy data set with the average of each 
 #variable for each activity and each subject.
-install.packages("reshape2")
+
 library(reshape2)
 data.set.melted <- melt(data.set, id = c("Subject", "Activity"))
 data.set2<- dcast(data.set.melted, Subject+Activity ~ variable, mean)
 View(data.set2)
-write.table(data.set2, "tidyData.txt", row.names = FALSE)
+write.table(data.set2, "./tidyData.txt", row.names = FALSE)
 
 #Use dataMaid package to generate codebook. More information about generating code book, refer to 
 #https://www.r-bloggers.com/generating-codebooks-in-r/
