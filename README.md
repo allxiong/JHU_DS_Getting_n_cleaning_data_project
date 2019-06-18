@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
                           Getting and cleaning data project README
                           
 Contents: 
@@ -50,4 +55,4 @@ Read the labels and features to have an overview of the data#- 'features_info.tx
   o	Melt data: data.set.melted <- melt(data.set, id = c("Subject", "Activity"))
   o	dcast data: data.set2<- dcast(data.set.melted, Subject+Activity ~ variable, mean)
   o	To view the result dataset, use View(data.set2)
-  o	Write data to file tidyData.txt: write.table(data.set2, "tidyData.txt", row.names = FALSE)
+  o	Write data to file tidyData.txt: write.table(data.set2, "./tidyData.txt", row.names = FALSE)
